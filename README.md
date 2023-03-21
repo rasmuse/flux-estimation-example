@@ -1,6 +1,6 @@
 # `opentoolflux` usage example
 
-This is an example of how to use [`opentoolflux`](https://pypi.org/project/opentoolflux/) to estimate gas fluxes from soil using time-series data from automatic chambers. For more info on the software design and intended use, please refer to the [documentation](https://pypi.org/project/opentoolflux/)..
+This is an example of how to use [`opentoolflux`](https://pypi.org/project/opentoolflux/) to estimate gas fluxes from soil using time-series data from automatic chambers. For more info on the software design and intended use, please refer to the [documentation](https://pypi.org/project/opentoolflux/).
 
 ## Install
 
