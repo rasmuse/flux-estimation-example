@@ -1,0 +1,86 @@
+2023-03-21 18:59:18,753 INFO     opentoolflux.cli          No existing database at 'outdata/database.feather'.
+2023-03-21 18:59:19,298 INFO     opentoolflux.cli          Database updated:
+         Size in memory (MB)    Rows
+Before                   0.0       0
+New data                 2.1  96,000
+After                    2.1  96,000
+2023-03-21 18:59:19,305 INFO     opentoolflux.database     Saved database to 'outdata/database.feather' (1.8 MiB).
+2023-03-21 18:59:19,867 INFO     opentoolflux.database     Reading database from 'outdata/database.feather' (1.8 MiB).
+2023-03-21 18:59:19,884 INFO     opentoolflux.measurements Database has 96,000 rows.
+2023-03-21 18:59:19,888 INFO     opentoolflux.measurements Data excluded by filters:
+                     Number rejected Share rejected
+ALARM_STATUS                  22,783          23.7%
+__TIMESTAMP__                  4,761           5.0%
+solenoid_valves               31,903          33.2%
+CO2                                0           0.0%
+All filters combined          52,257          54.4%
+
+2023-03-21 18:59:19,889 INFO     opentoolflux.measurements Filtered database has 43,743 rows.
+2023-03-21 18:59:19,933 INFO     opentoolflux.measurements 
+                   Number of segments Average duration Total duration
+All segments                       37         00:17:01       10:29:26
+Rejected segments                  10         00:09:04       01:30:39
+Final measurements                 27         00:19:57       08:58:48
+
+2023-03-21 18:59:19,935 INFO     opentoolflux.cli          Found 27 measurement(s) from 4 chamber(s):
+
+         Count
+Chamber       
+A1           6
+A2           9
+B1           7
+B2           5
+2023-03-21 18:59:20,499 INFO     opentoolflux.database     Reading database from 'outdata/database.feather' (1.8 MiB).
+2023-03-21 18:59:20,516 INFO     opentoolflux.measurements Database has 96,000 rows.
+2023-03-21 18:59:20,521 INFO     opentoolflux.measurements Data excluded by filters:
+                     Number rejected Share rejected
+ALARM_STATUS                  22,783          23.7%
+__TIMESTAMP__                  4,761           5.0%
+solenoid_valves               31,903          33.2%
+CO2                                0           0.0%
+All filters combined          52,257          54.4%
+
+2023-03-21 18:59:20,522 INFO     opentoolflux.measurements Filtered database has 43,743 rows.
+2023-03-21 18:59:20,570 INFO     opentoolflux.measurements 
+                   Number of segments Average duration Total duration
+All segments                       37         00:17:01       10:29:26
+Rejected segments                  10         00:09:04       01:30:39
+Final measurements                 27         00:19:57       08:58:48
+
+2023-03-21 18:59:20,663 INFO     opentoolflux.cli          Estimated 81 fluxes (N2O_dry, CH4_dry, CO2) in 27 measurements.
+2023-03-21 18:59:20,665 INFO     opentoolflux.cli          Saved fluxes to 'outdata/fluxes.csv'.
+2023-03-21 18:59:21,235 INFO     opentoolflux.database     Reading database from 'outdata/database.feather' (1.8 MiB).
+2023-03-21 18:59:21,252 INFO     opentoolflux.measurements Database has 96,000 rows.
+2023-03-21 18:59:21,256 INFO     opentoolflux.measurements Data excluded by filters:
+                     Number rejected Share rejected
+ALARM_STATUS                  22,783          23.7%
+__TIMESTAMP__                  4,761           5.0%
+solenoid_valves               31,903          33.2%
+CO2                                0           0.0%
+All filters combined          52,257          54.4%
+
+2023-03-21 18:59:21,258 INFO     opentoolflux.measurements Filtered database has 43,743 rows.
+2023-03-21 18:59:21,307 INFO     opentoolflux.measurements 
+                   Number of segments Average duration Total duration
+All segments                       37         00:17:01       10:29:26
+Rejected segments                  10         00:09:04       01:30:39
+Final measurements                 27         00:19:57       08:58:48
+
+2023-03-21 18:59:27,365 INFO     opentoolflux.database     Reading database from 'outdata/database.feather' (1.8 MiB).
+2023-03-21 18:59:27,383 INFO     opentoolflux.measurements Database has 96,000 rows.
+2023-03-21 18:59:27,389 INFO     opentoolflux.measurements Data excluded by filters:
+                     Number rejected Share rejected
+ALARM_STATUS                  22,783          23.7%
+__TIMESTAMP__                  4,761           5.0%
+solenoid_valves               31,903          33.2%
+CO2                                0           0.0%
+All filters combined          52,257          54.4%
+
+2023-03-21 18:59:27,390 INFO     opentoolflux.measurements Filtered database has 43,743 rows.
+2023-03-21 18:59:27,437 INFO     opentoolflux.measurements 
+                   Number of segments Average duration Total duration
+All segments                       37         00:17:01       10:29:26
+Rejected segments                  10         00:09:04       01:30:39
+Final measurements                 27         00:19:57       08:58:48
+
+2023-03-21 18:59:27,533 INFO     opentoolflux.cli          Estimated 81 fluxes (N2O_dry, CH4_dry, CO2) in 27 measurements.

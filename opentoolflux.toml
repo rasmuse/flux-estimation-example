@@ -1,0 +1,146 @@
+# The [general] section is optional.
+[general]
+# `outdir` is the output directory path, relative to the configuration file.
+# Optional. Default "opentoolflux".
+outdir = "outdata"
+
+# The [import] section is optional. If you already have a Feather database
+# file, this is not needed.
+[import]
+# src lists the path(s) to input data files which should be delimited text
+# files as explained above. All paths are relative to the configuration file.
+# When running the `opentoolflux import` command, these paths are searched.
+src = [
+    "path/to/filename.dat",  # Path to a specific file
+    "indata/2022/06/01/*.dat",  # Unix-style glob patterns using *
+    "indata/2022/**/*.dat",  # Also ** globs are supported.
+]
+
+# sep specifies the delimiter used in the data files..
+sep = "\\s+"  # One or more whitespace characters (the default).
+# sep = ","  # Alternative for comma-separated files
+# sep = "\\t,"  # Alternative for tab-separated files
+
+# timestamp_col gives the name of the column containing sample timestamps.
+# See the README section on timestamps for details on formats.
+timestamp_col = "EPOCH_TIME"
+
+# [import.columns] gives the names of the columns to import and their data types.
+# See the opentoolflux README section on data types for more details.
+[import.columns]
+EPOCH_TIME = "float64"
+solenoid_valves = "float16"
+ALARM_STATUS = "uint8"
+CO2 = "float32"
+CH4_dry = "float32"
+N2O_dry = "float32"
+
+
+# Filters are optional.
+#
+# A [filters.x] section specifies the filtering to be done on column x.
+# Filters can specify `allow_only`, `disallow` and `min` and `max`
+# as shown in examples below. The data matched by a filter is treated
+# as if it was not present in the database; i.e., data "removed" by
+# filters do not contribute at all to flux estimates and are not shown
+# in plots generated.
+
+[filters.ALARM_STATUS]
+disallow = [4]
+
+# __TIMESTAMP__ is a special column created in the database to store
+# the timestamps. This has datetime data type and any values specified in the
+# filter settings are automatically converted to datetime too.
+[filters.__TIMESTAMP__]
+min_value = "2022-05-09"
+max_value = "2022-05-10 06:00:00"
+
+# Advanced note on data types:
+# Filtering is done after import, i.e., using the data types specified in
+# the [import.columns] section above. Values specified in filter settings
+# are converted to the data types of the  corresponding column; therefore,
+# in the `solenoid_valves` example below, the `allow_only` values specified
+# as integers will be converted to `float16`, the specified data type for
+# that column, before the filter is applied.
+[filters.solenoid_valves]
+allow_only = [2, 3, 6, 7]
+
+[filters.CO2]
+min = 0
+max = 2000
+
+# The [measurements] section specifies how to split the database into segments
+# corresponding to chamber closures.
+[measurements]
+# chamber_col is the name of the database column indicating the current chamber.
+# A new segment starts when the value in this column changes.
+chamber_col = "solenoid_valves"
+
+# The time values below (max_gap, min_duration, and max_duration) should be set
+# to values corresponding to the setup of your experiment.
+#
+# In our example, the input data have ca 1 Hz sampling frequency, so a gap
+# of 10 seconds indicates a problem/restart which we treat as a "new" segment;
+# and the segment length normally should be 20 minutes, so we discard any
+# segments deviating more than 30 seconds from that.
+max_gap = "00:00:10"  # Max 10 seconds between samples.
+min_duration = "00:19:30"  # Segment length minimum 19 minutes 30 seconds.
+max_duration = "00:20:30"  # Segment length maximum 20 minutes 30 seconds.
+
+# The [fluxes] section specifies columns containing concentration data
+# to be analyzed.
+[fluxes]
+gases = ["N2O_dry", "CH4_dry", "CO2"]  # the list of gas-concentration columns
+
+# Chamber dimensions and sampled gas flow
+#
+# See notes on units in the README. In summary:
+# - Concentrations can be in any unit (e.g., ppmv or simple fractions m3/m3).
+# - V / Q must have unit second. (E.g., if Q is m3/s, then must be in m3.)
+# - A can have any unit.
+#
+# The resulting (volumetric) flux estimates will have the units of
+# [c * V / A] per second, where c is the concentration.
+# E.g., if concentrations are in ppmv, V in m3 and A in m2, then flux
+# estimates are in 10^-6 m/s (micrometer per second).
+#
+# We recommend using straight SI units throughout to minimize confusion.
+A = 0.25  # Soil area covered by the chamber, here 0.25 m2
+V = 50e-3  # Volume of chamber, here 50 liters in m3
+Q = 4.16e-6  # Gas flow drawn from chamber, here 0.25 liters/minute in m3/s
+
+# t0_delay is the time delay from chamber closure until the first gas arrives
+# in the gas analyzer. This delay depends on the tube length which may be
+# different between chambers.
+
+# Optionally, the same t0_delay can be set for all chambers:
+# t0_delay = "00:06:00"  # 6 minutes
+
+# t0_margin specifies an extra duration of data to discard after t0_delay,
+# to avoid estimation errors if the actual delay is longer which leads to "old"
+# gas concentrations being erroneously included in the curve fit.
+# Calculations are made using t0 equal to the closure start plus t0_delay.
+# See figures generated by `opentoolflux plot flux-fits` for an illustration.
+t0_margin = "00:02:00"
+
+# The `t0_delay` can be set to one value, e.g., t0_delay = "00:06:00" as above,
+# or as a table with different t0_delay for each chamber, as follows.
+# This is the preferred solution if the delay is substantially different
+# between chambers.
+# The left-hand side of these assignments is a string representation
+# of the chamber value, i.e., in this example the value found in the
+# `solenoid_valves` column.
+[fluxes.t0_delay]
+2 = "00:04:00"  # 4 minutes
+3 = "00:06:00"  # 6 minutes
+6 = "00:05:30"  # 5 minutes 30 seconds
+7 = "00:06:30"  # 6 minutes 30 seconds
+
+# The [chamber_labels] section is optional. The labels may correspond to
+# labels used in the experimental design. If specified, these labels
+# are used in output file names and printed in figures.
+[chamber_labels]
+2 = "A1"
+3 = "A2"
+6 = "B1"
+7 = "B2"
